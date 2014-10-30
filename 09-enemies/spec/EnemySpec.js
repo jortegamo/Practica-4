@@ -61,3 +61,40 @@
 
 */
 
+describe ("Clase Enemy",function(){
+
+	beforeEach(function(){
+		oldSpriteSheet = SpriteSheet;
+	});
+	
+	afterEach(function(){
+		SpriteSheet = oldSpriteSheet;
+	});
+	
+	it("Creando enemigos",function(){
+		SpriteSheet = {map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }}};
+		var enemy1 = new Enemy(enemies.basic);
+		var enemy2 = new Enemy(enemies.basic,{x: 200});
+		expect(enemy1.w).toEqual(enemy2.w);
+		expect(enemy1.w).toBe(42);
+		expect(enemy1.h).toEqual(enemy2.h);
+		expect(enemy1.h).toBe(43);
+		expect(enemy1.B).toEqual(enemy2.B);
+		expect(enemy1.B).toBe(100);
+		expect(enemy1.C).toEqual(enemy2.C);
+		expect(enemy1.C).toBe(2);
+		expect(enemy1.E).toEqual(enemy2.E);
+		expect(enemy1.E).toBe(100);
+		expect(enemy1.x).not.toBe(enemy2.x);
+		expect(enemy1.x).toBe(100);
+		expect(enemy2.x).toBe(200);
+		expect(enemy1.y).toEqual(enemy2.y);
+		expect(enemy1.y).toBe(-50);
+	});
+	
+	
+});
+
+
+
+
