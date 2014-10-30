@@ -71,6 +71,10 @@ describe ("Clase Enemy",function(){
 		SpriteSheet = oldSpriteSheet;
 	});
 	
+	it("Definida la clase",function(){
+		expect(Enemy).toBeDefined();
+	});
+	
 	it("Creando enemigos",function(){
 		SpriteSheet = {map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }}};
 		var enemy1 = new Enemy(enemies.basic);
@@ -92,6 +96,34 @@ describe ("Clase Enemy",function(){
 		expect(enemy1.y).toBe(-50);
 	});
 	
+	it ("step",function(){
+		SpriteSheet = {map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }}};
+		var enemy = new Enemy(enemies.basic);
+		var board = new GameBoard();
+		board.add(enemy);
+		var vx = enemy.A + enemy.B * Math.sin(enemy.C * enemy.t + enemy.D);
+		var ny = enemy.y + enemy.E + enemy.F * Math.sin(enemy.G * enemy.t + enemy.H);
+		enemy.step(1);
+		expect(enemy.x).toBe(enemy.x + vx);
+		expect(enemy.y).toBe(ny);
+		board.resetRemoved();
+		enemy.step(40);
+		expect(board.removed.length).toBe(1);
+	});
+	
+	it ("draw",function(){
+		SpriteSheet = {map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }},
+									 draw: function(){}};
+		var enemy = new Enemy(enemies.basic);
+		var board = new GameBoard();
+		board.add(enemy);
+		spyOn(SpriteSheet,"draw");
+		board.draw();
+		expect(SpriteSheet.draw).toHaveBeenCalled();
+		expect(SpriteSheet.draw.calls[0].args[1]).toBe("enemy_purple"); 
+		expect(SpriteSheet.draw.calls[0].args[2]).toBe(100); 
+		expect(SpriteSheet.draw.calls[0].args[3]).toBe(-50); 
+	});
 	
 });
 
