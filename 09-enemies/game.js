@@ -4,7 +4,8 @@ var sprites = {
     enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
     enemy_bee: { sx: 79, sy: 0, w: 37, h: 43, frames: 1 },
     enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 },
-    enemy_circle: { sx: 158, sy: 0, w: 32, h: 33, frames: 1 }
+    enemy_circle: { sx: 158, sy: 0, w: 32, h: 33, frames: 1 },
+    explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }
 };
 
 
@@ -151,7 +152,23 @@ var PlayerShip = function() {
 	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 	}
 	this.up = (!Game.keys['fire'] && this.reload<0);
+	
+	if(Game.keys['leftFB']) {
+	    this.reload = this.reloadTime;
+	    Game.keys['leftFB'] = false;
+	    // Se a–ade al GameBoard una FireBall con trayectoria hacia la izquierda.
+	    this.board.add(new FireBall(this.x+this.w,this.y+this.h/2,'left'));
+	}
+	
+   if(Game.keys['rightFB']) {
+	    this.reload = this.reloadTime;
+	    Game.keys['rightFB'] = false;
+	    // Se a–ade al GameBoard una FireBall con trayectoria hacia la derecha.
+	    this.board.add(new FireBall(this.x,this.y+this.h/2,'right'));
+	    
+	} 
     }
+   
 
     this.draw = function(ctx) {
 	SpriteSheet.draw(ctx,'ship',this.x,this.y,0);
@@ -179,6 +196,39 @@ PlayerMissile.prototype.step = function(dt)  {
 PlayerMissile.prototype.draw = function(ctx)  {
     SpriteSheet.draw(ctx,'missile',this.x,this.y);
 };
+
+
+
+//Constructor para bolas de fuego.
+var FireBall = function(x,y,dir) {
+		this.s = SpriteSheet.map['explosion'];
+    this.w = this.s.w/2;
+    this.h = this.s.h/2;
+    this.x = x - this.w/2; 
+    this.y = y - this.h; 
+    this.vx = (dir === 'right') ? -25 : 25;
+    this.t = 0;
+};
+
+FireBall.prototype.step = function(dt)  {
+		this.t += dt;
+    this.x += this.vx * dt;
+    this.y += -20 * Math.sin(1.5 * Math.PI/4 ) * this.t + 0.5 * 20 * Math.pow(this.t,2);
+    
+    if(this.y > Game.heigth ||
+    	 this.x < - this.w ||
+    	 this.x > Game.width) { 
+    	 		this.board.remove(this); 
+  	}	
+};
+
+FireBall.prototype.draw = function(ctx)  {
+    SpriteSheet.draw(ctx,'explosion',this.x,this.y,this.w,this.h,0);
+};
+
+
+
+
 
 
 
