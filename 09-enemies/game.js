@@ -151,22 +151,24 @@ var PlayerShip = function() {
 	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
 	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 	}
-	this.up = (!Game.keys['fire'] && this.reload<0);
 	
-	if(Game.keys['leftFB']) {
+	if(Game.keys['leftFB'] && this.up ) {
 	    this.reload = this.reloadTime;
-	    Game.keys['leftFB'] = false;
 	    // Se a–ade al GameBoard una FireBall con trayectoria hacia la izquierda.
-	    this.board.add(new FireBall(this.x+this.w,this.y+this.h/2,'left'));
+	    this.board.add(new FireBall(this.x,this.y+this.h/2,'left'));
 	}
 	
-   if(Game.keys['rightFB']) {
+   if(Game.keys['rightFB'] && this.up) {
 	    this.reload = this.reloadTime;
-	    Game.keys['rightFB'] = false;
 	    // Se a–ade al GameBoard una FireBall con trayectoria hacia la derecha.
-	    this.board.add(new FireBall(this.x,this.y+this.h/2,'right'));
+	    this.board.add(new FireBall(this.x+this.w,this.y+this.h/2,'right'));
 	    
 	} 
+	
+	this.up = (!Game.keys['fire'] && 
+						 !Game.keys['leftFB'] && 
+						 !Game.keys['rightFB'] && 
+						 this.reload<0);
     }
    
 
@@ -209,10 +211,10 @@ var FireBall = function(x,y,dir) {
     
     if (dir == "right"){
     	this.vy = -750;
-    	this.vx = -200;
+    	this.vx = 200;
     }else{
     	this.vy = -750;
-    	this.vx = 200;
+    	this.vx = -200;
     }
 };
 

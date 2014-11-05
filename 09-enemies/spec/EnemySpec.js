@@ -107,7 +107,7 @@ describe ("Clase Enemy",function(){
 		expect(enemy.x).toBe(enemy.x + vx);
 		expect(enemy.y).toBe(ny);
 		board.resetRemoved();
-		enemy.step(40);
+		enemy.step(40000);
 		expect(board.removed.length).toBe(1);
 	});
 	
