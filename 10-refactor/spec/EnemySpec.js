@@ -61,3 +61,72 @@
 
 */
 
+describe ("Clase Enemy",function(){
+
+	beforeEach(function(){
+		oldSpriteSheet = SpriteSheet;
+	});
+	
+	afterEach(function(){
+		SpriteSheet = oldSpriteSheet;
+	});
+	
+	it("Definida la clase",function(){
+		expect(Enemy).toBeDefined();
+	});
+	
+	it("Creando enemigos",function(){
+		SpriteSheet = {map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }}};
+		var enemy1 = new Enemy(enemies.basic);
+		var enemy2 = new Enemy(enemies.basic,{x: 200});
+		expect(enemy1.w).toEqual(enemy2.w);
+		expect(enemy1.w).toBe(42);
+		expect(enemy1.h).toEqual(enemy2.h);
+		expect(enemy1.h).toBe(43);
+		expect(enemy1.B).toEqual(enemy2.B);
+		expect(enemy1.B).toBe(100);
+		expect(enemy1.C).toEqual(enemy2.C);
+		expect(enemy1.C).toBe(2);
+		expect(enemy1.E).toEqual(enemy2.E);
+		expect(enemy1.E).toBe(100);
+		expect(enemy1.x).not.toBe(enemy2.x);
+		expect(enemy1.x).toBe(100);
+		expect(enemy2.x).toBe(200);
+		expect(enemy1.y).toEqual(enemy2.y);
+		expect(enemy1.y).toBe(-50);
+	});
+	
+	it ("step",function(){
+		SpriteSheet = {map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }}};
+		var enemy = new Enemy(enemies.basic);
+		var board = new GameBoard();
+		board.add(enemy);
+		var vx = enemy.A + enemy.B * Math.sin(enemy.C * enemy.t + enemy.D);
+		var ny = enemy.y + enemy.E + enemy.F * Math.sin(enemy.G * enemy.t + enemy.H);
+		enemy.step(1);
+		expect(enemy.x).toBe(enemy.x + vx);
+		expect(enemy.y).toBe(ny);
+		board.resetRemoved();
+		enemy.step(40000);
+		expect(board.removed.length).toBe(1);
+	});
+	
+	it ("draw",function(){
+		SpriteSheet = {map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }},
+									 draw: function(){}};
+		var enemy = new Enemy(enemies.basic);
+		var board = new GameBoard();
+		board.add(enemy);
+		spyOn(SpriteSheet,"draw");
+		board.draw();
+		expect(SpriteSheet.draw).toHaveBeenCalled();
+		expect(SpriteSheet.draw.calls[0].args[1]).toBe("enemy_purple"); 
+		expect(SpriteSheet.draw.calls[0].args[2]).toBe(100); 
+		expect(SpriteSheet.draw.calls[0].args[3]).toBe(-50); 
+	});
+	
+});
+
+
+
+
