@@ -25,7 +25,7 @@ describe ("Clase Fireball",function(){
 	
 	it("Crear Fireball",function(){
 		SpriteSheet = {
-			map: {explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
+			map: {fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
 		};
 		var lFB = new FireBall(10,10,'left');
 		var rFB = new FireBall(10,10,'right');
@@ -40,7 +40,7 @@ describe ("Clase Fireball",function(){
 	
 	it("step FB left",function(){
 		SpriteSheet = {
-			map: {explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
+			map: {fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
 		};
 		var board = {remove: function(){}};
 		var FB = new FireBall(160,480,'left');
@@ -55,7 +55,7 @@ describe ("Clase Fireball",function(){
 	
 	it("step FB right",function(){
 		SpriteSheet = {
-			map: {explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
+			map: {fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
 		};
 		var board = {remove: function(){}};
 		var FB = new FireBall(160,480,'right');
@@ -70,21 +70,21 @@ describe ("Clase Fireball",function(){
 	
 	it("draw",function(){
 		SpriteSheet = {
-			map: {explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }},
+			map: {fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }},
 			draw: function(){}
 		};
 		var FB = new FireBall(10,10);
 		spyOn(SpriteSheet,'draw');
 		FB.draw(ctx);
 		//Nos aseguramos de que el paso de parametros es el correcto.
-		expect (SpriteSheet.draw).toHaveBeenCalledWith(ctx,'explosion',FB.x,FB.y,FB.w,FB.h,0);
+		expect (SpriteSheet.draw).toHaveBeenCalledWith(ctx,'fireball',FB.x,FB.y,0,FB.w,FB.h);
 	});
 	
 	it ("No hay disparos con tecla pulsada",function(){
 		// creamos un objeto dummy SpriteSheet y que en su map tiene almacenado un sprite explosion y el sprite de nuestra nave.
 		SpriteSheet = { 
   			map : {ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
-  						 explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
+  						 fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
 		};
 		var miBoard = new GameBoard();
 		var miNave = new PlayerShip();

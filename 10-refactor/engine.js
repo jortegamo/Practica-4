@@ -108,13 +108,11 @@ var SpriteSheet = new function() {
     //  en this.map, x e y en las que dibujarlo, y opcionalmente,
     //  frame para seleccionar el frame de un sprite que tenga varios
     //  como la explosion
-    this.draw = function(ctx,sprite,x,y,dw,dh,frame) {
+    this.draw = function(ctx,sprite,x,y,frame,dw,dh) {
 	var s = this.map[sprite];
 	if(!frame) frame = 0;
-	if(!dw && !dh){
-		dw = s.w;
-		dh = s.h;
-	}
+	dw = (!dw) ? s.w : dw;
+	dh = (!dh) ? s.h : dh;
 	ctx.drawImage(this.image,
                       s.sx + frame * s.w, 
                       s.sy, 
@@ -292,5 +290,5 @@ Sprite.prototype.merge = function(props) {
 }
 
 Sprite.prototype.draw = function(ctx) {
-  SpriteSheet.draw(ctx,this.sprite,this.x,this.y,this.dw, this.dh,this.frame);
+  SpriteSheet.draw(ctx,this.sprite,this.x,this.y,this.frame,this.w,this.h);
 }

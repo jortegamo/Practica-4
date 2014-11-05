@@ -86,7 +86,7 @@ describe ("Clase Enemy",function(){
 		expect(enemy1.B).toEqual(enemy2.B);
 		expect(enemy1.B).toBe(100);
 		expect(enemy1.C).toEqual(enemy2.C);
-		expect(enemy1.C).toBe(2);
+		expect(enemy1.C).toBe(4);
 		expect(enemy1.E).toEqual(enemy2.E);
 		expect(enemy1.E).toBe(100);
 		expect(enemy1.x).not.toBe(enemy2.x);

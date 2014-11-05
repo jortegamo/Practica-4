@@ -186,20 +186,17 @@ PlayerMissile.prototype.step = function(dt)  {
 
 //Constructor para bolas de fuego.
 var FireBall = function(x,y,dir) {
-		this.setup('fireball');
-    this.dw = this.w/2;
-    this.dh = this.h/2;
-    this.x = x - this.w/4; 
-    this.y = y - this.h/2; 
-    
     if (dir == "right"){
-    	this.vy = -750;
-    	this.vx = 200;
+    	this.setup('fireball',{vy: -750, vx: 200});
     }else{
-    	this.vy = -750;
-    	this.vx = -200;
+    	this.setup('fireball',{vy: -750, vx: -200})
     }
+    this.w = this.w/2;
+    this.h = this.h/2;
+    this.x = x - this.w/2;
+    this.y = y - this.h;
 };
+
 FireBall.prototype = new Sprite();
 
 FireBall.prototype.step = function(dt)  {
