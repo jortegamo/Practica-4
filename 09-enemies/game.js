@@ -206,14 +206,21 @@ var FireBall = function(x,y,dir) {
     this.h = this.s.h/2;
     this.x = x - this.w/2; 
     this.y = y - this.h; 
-    this.vx = (dir === 'right') ? -25 : 25;
-    this.t = 0;
+    
+    if (dir == "right"){
+    	this.vy = -750;
+    	this.vx = -200;
+    }else{
+    	this.vy = -750;
+    	this.vx = 200;
+    }
 };
 
 FireBall.prototype.step = function(dt)  {
-		this.t += dt;
-    this.x += this.vx * dt;
-    this.y += -20 * Math.sin(1.5 * Math.PI/4 ) * this.t + 0.5 * 20 * Math.pow(this.t,2);
+		this.x += this.vx * dt;
+		this.y += this.vy * dt;
+		
+		this.vy += 100;
     
     if(this.y > Game.heigth ||
     	 this.x < - this.w ||
