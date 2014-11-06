@@ -42,9 +42,9 @@ describe ("Clase Fireball",function(){
 		SpriteSheet = {
 			map: {fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
 		};
-		var board = {remove: function(){}};
+		var board = new GameBoard();
 		var FB = new FireBall(160,480,'left');
-		FB.board = board;
+		board.add(FB);
 		FB.step(0.5);
 		expect(FB.x).toBe(44);
 		expect(FB.y).toBe(73);
@@ -57,9 +57,9 @@ describe ("Clase Fireball",function(){
 		SpriteSheet = {
 			map: {fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
 		};
-		var board = {remove: function(){}};
+		var board = new GameBoard();
 		var FB = new FireBall(160,480,'right');
-		FB.board = board;
+		board.add(FB);
 		FB.step(0.5);
 		expect(FB.x).toBe(244);
 		expect(FB.y).toBe(73);
