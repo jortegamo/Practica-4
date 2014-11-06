@@ -128,7 +128,8 @@ var PlayerShip = function() {
     this.reload = this.reloadTime;
     this.x = Game.width/2 - this.w / 2;
     this.y = Game.height - 10 - this.h;
-
+		
+		
     this.step = function(dt) {
 	if(Game.keys['left']) { this.vx = -this.maxVel; }
 	else if(Game.keys['right']) { this.vx = this.maxVel; }
@@ -223,7 +224,9 @@ FireBall.prototype.step = function(dt)  {
 		this.vy += 100;
     var collision = this.board.collide(this,OBJECT_ENEMY);
     
-    if (collision) collision.hit(this.damage);
+    if (collision){
+    	collision.hit(this.damage);
+    }
     if(this.y > Game.heigth ||
     	 this.x < - this.w ||
     	 this.x > Game.width) { 
