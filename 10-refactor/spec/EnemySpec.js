@@ -99,16 +99,16 @@ describe ("Clase Enemy",function(){
 	it ("step",function(){
 		SpriteSheet = {map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }}};
 		var enemy = new Enemy(enemies.basic);
-		var board = new GameBoard();
-		board.add(enemy);
+		var board = {remove: function(){}};
+		enemy.board = board;
 		var vx = enemy.A + enemy.B * Math.sin(enemy.C * enemy.t + enemy.D);
 		var ny = enemy.y + enemy.E + enemy.F * Math.sin(enemy.G * enemy.t + enemy.H);
 		enemy.step(1);
 		expect(enemy.x).toBe(enemy.x + vx);
 		expect(enemy.y).toBe(ny);
-		board.resetRemoved();
+		spyOn(board, 'remove');
 		enemy.step(40000);
-		expect(board.removed.length).toBe(1);
+		expect(board.remove).toHaveBeenCalled();
 	});
 	
 	it ("draw",function(){

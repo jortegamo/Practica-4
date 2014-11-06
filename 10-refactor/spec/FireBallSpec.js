@@ -66,6 +66,7 @@ describe ("Clase Fireball",function(){
 		spyOn(board, 'remove');
 		FB.step(1);
 		expect(board.remove).toHaveBeenCalled(); //ya ha desaparecido de la pantalla.
+		
 	});
 	
 	it("draw",function(){
@@ -77,7 +78,7 @@ describe ("Clase Fireball",function(){
 		spyOn(SpriteSheet,'draw');
 		FB.draw(ctx);
 		//Nos aseguramos de que el paso de parametros es el correcto.
-		expect (SpriteSheet.draw).toHaveBeenCalledWith(ctx,'fireball',FB.x,FB.y,0,FB.w,FB.h);
+		expect (SpriteSheet.draw).toHaveBeenCalledWith(ctx,'fireball',FB.x,FB.y,FB.w,FB.h,0);
 	});
 	
 	it ("No hay disparos con tecla pulsada",function(){
