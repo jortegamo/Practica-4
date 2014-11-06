@@ -221,14 +221,10 @@ FireBall.prototype.step = function(dt)  {
 		this.y += this.vy * dt;
 		
 		this.vy += 100;
-    var collision_enemy = this.board.collide(this,OBJECT_ENEMY);
-    var collision_player = this.board.collide(this,OBJECT_PLAYER);
-    if (collision_enemy) collision_enemy.hit(this.damage);
-    if (collision_player) collision_player.hit(this.damage);
+    var collision = this.board.collide(this,OBJECT_ENEMY);
     
-    if(collision_player ||
-    	 collision_enemy ||
-    	 this.y > Game.heigth ||
+    if (collision) collision.hit(this.damage);
+    if(this.y > Game.heigth ||
     	 this.x < - this.w ||
     	 this.x > Game.width) { 
     	 		this.board.remove(this); 
