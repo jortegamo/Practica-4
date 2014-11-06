@@ -46,7 +46,6 @@ describe("Clase PlayerShip", function(){
  	expect(SpriteSheet.draw.calls[0].args[1]).toEqual("ship");
  	expect(SpriteSheet.draw.calls[0].args[2]).toEqual(miNave.x);
  	expect(SpriteSheet.draw.calls[0].args[3]).toEqual(miNave.y);
- 	expect(SpriteSheet.draw.calls[0].args[4]).toEqual(0);
 	
     });
 
