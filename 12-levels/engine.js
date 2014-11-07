@@ -137,7 +137,9 @@ var TitleScreen = function TitleScreen(title,subtitle,callback) {
     // soltarla y
     this.step = function(dt) {
 	if(!Game.keys['fire']) up = true;
-	if(up && Game.keys['fire'] && callback) callback();
+	if(up && Game.keys['fire'] && callback){
+	 callback();
+	}
     };
 
     this.draw = function(ctx) {
@@ -402,6 +404,7 @@ Level.prototype.step = function(dt) {
     // juegos.  Para ello se hace uso de la propiedad this.board.cnt
     // que lleva la cuenta de cuántos objetos de cada tipo hay en el
     // tablero de juegos.
+    
     if(this.levelData.length === 0 && this.board.cnt[OBJECT_ENEMY] === 0) {
 	if(this.callback) this.callback();
     }
