@@ -44,7 +44,7 @@ var OBJECT_PLAYER            =  1,
     OBJECT_ENEMY_PROJECTILE  =  8,
     OBJECT_POWERUP           = 16;
 
-var startGame = function() {
+var startGame = function(level) {
     Game.setBoard(0,new Starfield(20,0.4,100,true));
     Game.setBoard(1,new Starfield(50,0.6,100));
     Game.setBoard(2,new Starfield(100,1.0,50));
@@ -79,7 +79,12 @@ var level1 = [
     [ 22000,    25000, 400,         'wiggle',   { x: 100 } ]
 ];
 
-
+var level2 = [
+  //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
+    [ 0,        4000,  400,         'step'                 ],
+    [ 6000,     13000, 800,         'ltr'                  ],
+    [ 10000,    16000, 400,         'circle'               ]
+];
 
 var playGame = function() {
     var board = new GameBoard();
@@ -88,9 +93,26 @@ var playGame = function() {
     // Se un nuevo nivel al tablero de juego, pasando la definición de
     // nivel level1 y la función callback a la que llamar si se ha
     // ganado el juego
-    board.add(new Level(level1, winGame));
+    board.add(new Level(level1, nextLevel));
     Game.setBoard(3,board);
 };
+
+var nextLevel = function(){
+	Game.setBoard(3,new TitleScreen("You win!", 
+                                  "Press fire to play next level",
+                                  playGame2));
+}
+
+var playGame2 = function(){
+	var board = new GameBoard();
+    board.add(new PlayerShip());
+
+    // Se un nuevo nivel al tablero de juego, pasando la definición de
+    // nivel level1 y la función callback a la que llamar si se ha
+    // ganado el juego
+    board.add(new Level(level2, winGame));
+    Game.setBoard(3,board);
+}
 
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
