@@ -187,7 +187,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
 // poder ser dibujada desde el bucle principal del juego
 var PlayerShip = function() { 
     this.setup('ship', { vx: 0, reloadTime: 0.25, maxVel: 200 });
-
+		
+		
     this.reload = this.reloadTime;
     this.x = Game.width/2 - this.w / 2;
     this.y = Game.height - 10 - this.h;
@@ -239,9 +240,8 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
-    if(this.board.remove(this)) {
-	loseGame();
-    }
+		this.board.remove(this);
+		this.board.add(new Explosion(this.x + this.w/2, this.y + this.h/2,loseGame));
 };
 
 
@@ -400,12 +400,14 @@ Enemy.prototype.hit = function(damage) {
 
 
 // Constructor para la explosión
-
-var Explosion = function(centerX,centerY) {
+//le a–adimos una parametro callback para que se ejecute en el 
+//momento en el que la explosion se refresca con el ultimo subframe.
+var Explosion = function(centerX,centerY,callback) {
     this.setup('explosion', { frame: 0 });
     this.x = centerX - this.w/2;
     this.y = centerY - this.h/2;
     this.subFrame = 0;
+    this.callback = callback;
 };
 
 Explosion.prototype = new Sprite();
@@ -414,6 +416,7 @@ Explosion.prototype.step = function(dt) {
     this.frame = Math.floor(this.subFrame++ / 2);
     if(this.subFrame >= 24) {
 	this.board.remove(this);
+	if(this.callback) this.callback();
     }
 }
 

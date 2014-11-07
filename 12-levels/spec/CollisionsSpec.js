@@ -155,6 +155,7 @@ describe("Collisions",function(){
 	it("playerShip vs enemy",function(){
 		SpriteSheet = {map: {
 			ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
+			explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
     	enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }}
 		};
 		var board = new GameBoard();
@@ -166,7 +167,7 @@ describe("Collisions",function(){
 		board.add(enemy);
 		expect(board.objects.length).toBe(2);
 		board.step(1);
-		expect(board.objects.length).toBe(0); //Ambas naves se destruyen y no producen explosiones.
+		expect(board.objects.length).toBe(1); //Ahora se muestra la explosion.
 		
 	});
 });
